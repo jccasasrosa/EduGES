@@ -1,33 +1,54 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
+import { View, StyleSheet, Image, Text, Button, Platform, PixelRatio, SafeAreaView } from 'react-native';
 
-const AppBar = () => {
+const fontScale = PixelRatio.getPixelSizeForLayoutSize(8);
+const imgCampana = '../assets/notification.png';
+const imgAjustes = '../assets/settings.png';
+
+const AppBarSup = () => {
   return (
-    <View style={styles.appBar}>
-      <Text style={styles.title}>Mi aplicación</Text>
-      <View style={styles.rightButtons}>
-        <Button title="Opción 1" onPress={() => {}} />
-        <Button title="Opción 2" onPress={() => {}} />
+    <SafeAreaView style={styles.barraNegra}>
+      <View style={styles.appBar}>
+        <Text style={styles.title}>Centro Jabalcuz</Text>
+        <View style={styles.rightButtons}>
+          <Image style={styles.icon} source={require(imgCampana)} onPress={() => {}} />
+          <Image style={styles.icon} source={require(imgAjustes)} onPress={() => {}} />
+          {/* <Button title="Opción 1" onPress={() => {}} />
+          <Button title="Opción 2" onPress={() => {}} /> */}
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   appBar: {
-    height: 50,
-    backgroundColor: '#333',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingTop: 10,
+    paddingBottom: Platform.OS === 'ios' ? 10 : 10,
+  },
+  barraNegra: {
+    backgroundColor: "#000000",
   },
   title: {
-    fontSize: 18,
-    color: '#fff'
+    fontSize: fontScale,
+    color: '#47525E',
+    marginLeft: 15,
   },
   rightButtons: {
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  icon: {
+    height: '21%',
+    width: '21%',
+    resizeMode: 'contain',
+    aspectRatio: 1,
+    marginRight: 10,
+  },
 });
 
-export default AppBar;
+export default AppBarSup;
