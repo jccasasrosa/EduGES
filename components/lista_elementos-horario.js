@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, PixelRatio } from 'react-native';
 
-const num = [["Matemáticas", "09:30", "2ºA"],["Naturales", "09:30", "1ºC"],["Lengua", "08:30", "3ºA"],["Matemáticas", "15:30", "3ºB"],["Matemáticas", "09:30", "2ºC"]]
+const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
+const fontScaleElementos = PixelRatio.getPixelSizeForLayoutSize(6.1);
 
 const TextoHoraClase = ({ Materia, Hora, Clase }) => (
     <View style={styles.card}>
@@ -11,22 +12,20 @@ const TextoHoraClase = ({ Materia, Hora, Clase }) => (
     </View>
   );
 
-const listaClases = () => { 
+export default function ListaMateria({ lista, tit }) {
   return ( 
     <View style={styles.view}>
-      <Text style={styles.subtitulo}>Horas de Clase</Text>
+      <Text style={styles.subtitulo}>{tit}</Text>
       <View>
-        <FlatList 
-          data = {num}
-          renderItem = {
-            ({item}) => (
-              <TextoHoraClase Materia={item[0]} Hora={item[1]} Clase={item[2]} />
-            )
-        }/>
+        <View>
+          {lista.map((item) => (
+            <TextoHoraClase Materia={item[0]} Hora={item[1]} Clase={item[2]} />
+          ))}
+        </View>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({ 
   card: {
@@ -54,13 +53,14 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     marginRight: 0,
     backgroundColor: '#f4f4f4',
-    fontSize: 17,
+    fontSize: fontScaleElementos,
     alignContent: 'center',
+    minWidth: 45,
   }, 
   textMat: {
     textAlign: 'left',
     color: '#47525E',
-    fontSize: 17,
+    fontSize: fontScaleElementos,
     paddingTop: 12, 
     paddingBottom: 12, 
     paddingLeft: 10, 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   textDer: {
     textAlign: 'right',
     color: '#47525E',
-    fontSize: 17,
+    fontSize: fontScaleElementos,
     paddingTop: 12, 
     paddingBottom: 12, 
     paddingLeft: 10, 
@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
     marginRight: 0,
   }, 
   subtitulo: {
+    backgroundColor: '#f4f4f4',
     color: '#47525E',
-    fontSize: 13,
+    fontSize: fontScale,
     paddingLeft: 10, 
   },
   view: {
     backgroundColor: '#f4f4f4',
+    paddingBottom: 20,
   }
 });
-
-export default listaClases;
