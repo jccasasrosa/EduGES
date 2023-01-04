@@ -1,43 +1,83 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, Text, StyleSheet, TouchableOpacity, PixelRatio, ScrollView, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const SettingsScreen = () => {
+const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
+const fontScaleElementos = PixelRatio.getPixelSizeForLayoutSize(10.1);
+
+export default function SettingsScreen(props) {
+  const [isPressed, setIsPressed] = useState(false);
+  const navigation = useNavigation();
+  const login = props.route.params.login;
+  const actualizaLogin = props.route.params.actualizaLogin;
+
+  const muestraModal = () => {
+    Alert.alert(
+      'Atención',
+      '¿Seguro que quieres cerrar sesión?',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Cancela'),
+        },
+        {
+          text: 'Confirmar',
+          onPress: () => vistaLogin(),
+          style: 'destructive',
+        },
+      ]
+    );
+  };
+
+  const vistaLogin = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
+
+    actualizaLogin(true);
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topSide}>
-    
         <View style={styles.topContainer}>
-          <Image style={styles.profileImage} source={require('./face_logo-removebg-preview.png')} />
-          <Image style={styles.profilePlus} source={require('./plus.png')} />
+          <Image style={styles.profileImage} source={require('../assets/persona.png')} />
+          <Image style={styles.profilePlus} source={require('../assets/plus_blue.png')} />
           <Text style={styles.profileName}>Ra&uacute;l Ca&ntilde;ada</Text>
         </View>
         <View style={styles.card}>
-        <Image style={styles.icon} source={require('./notification.png')} />
+          <Image style={styles.icon} source={require('../assets/notification.png')} />
           <Text style={styles.optionTitle}>Notificaciones</Text>
         </View>
         <View style={styles.card}>
-        <Image style={styles.icon} source={require('./lock.png')} />
+          <Image style={styles.icon} source={require('../assets/lock.png')} />
           <Text style={styles.optionTitle}>Seguridad</Text>
         </View>
         <View style={styles.card}>
-        <Image style={styles.icon} source={require('./language.png')} />
+          <Image style={styles.icon} source={require('../assets/language.png')} />
           <Text style={styles.optionTitle}>Idioma</Text>
-          <Text style={styles.optionLanguage}>ES ></Text>
+          <Text style={styles.optionLanguage}>ES {'>'}</Text>
         </View>
       </View>
-      <Pressable style={styles.boton}  onPress={() => {}}>
-          <Text style={styles.textBoton}>Cerrar sesi&oacute;n</Text>
-      </Pressable>
-      <Text style={styles.textVersion}>Versi&oacute;n 1.0.1</Text>
-    </View>
+      <View style={styles.bottomSide}>
+        <TouchableOpacity style={[styles.boton, isPressed ? styles.botonPresionado : null]}
+          onPressIn={() => setIsPressed(!isPressed)}
+          onPressOut={() => setIsPressed(!isPressed)}
+          onPress={muestraModal}>
+            <Text style={[styles.textBoton, isPressed ? styles.textBotonPresionado : null]}>Cerrar sesi&oacute;n</Text>
+        </TouchableOpacity>
+        <Text style={styles.textVersion}>Versi&oacute;n 0.0.1</Text>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-    card: {
+  card: {
     alignSelf: 'center',
     top: 15, 
-    width: '95%',
+    width: '90%',
     margin: 3, 
     marginTop: 0, 
     paddingTop: 8, 
@@ -56,14 +96,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ecf0f1',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   topContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50
+    marginTop: 30,
+    marginBottom: 30,
+    marginLeft: 10,
   },
   profileImage: {
     width: 100,
@@ -88,32 +129,48 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   profileName: {
-    fontSize: 24,
+    fontSize: fontScaleElementos,
     color: '#47525E'
   },
   optionTitle: {
-    fontSize: 20,
-    color: '#47525E'
+    fontSize: fontScale,
+    color: '#47525E',
+    alignSelf: 'center',
   },
   optionLanguage: {
-    fontSize: 20,
+    fontSize: fontScale,
     position: 'absolute',
     right: 10,
-    color: '#47525E'
+    color: '#47525E',
+    alignSelf: 'center',
   },
   boton: {
-    width: '95%',
+    width: '90%',
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#FC5555',
-    padding: 10,
+    padding: 15,
     backgroundColor: '#FFFFFF',
+    alignSelf: 'center',
+  },
+  botonPresionado: {
+    width: '90%',
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#FC5555',
+    padding: 15,
+    backgroundColor: '#FC5555',
     alignSelf: 'center',
   },
   textBoton: {
     textAlign: "center",
     color: 'red',
-    fontSize: 20,
+    fontSize: fontScale,
+  },
+  textBotonPresionado: {
+    textAlign: "center",
+    color: 'white',
+    fontSize: fontScale,
   },
   textVersion: {
     textAlign: "center",
@@ -121,16 +178,17 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     padding: 5,
     margin: 10,
-    width: '90%',
+    width: '95%',
     color: '#47525E',
   },
   topSide:{
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    width: '100%'
+    alignSelf: 'flex-start',
+    width: '100%',
+    paddingBottom: 50,
+  },
+  bottomSide: {
+    alignSelf: 'flex-end',
+    width: '100%',
+    bottom: '12%',
   }
 });
-
-
-export default SettingsScreen;

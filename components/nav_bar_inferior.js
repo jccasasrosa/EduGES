@@ -8,25 +8,40 @@ const imgNavDer = '../assets/class.png';
   
 export default function AppBarInf(props) {
   const navigation = useNavigation();
-  const {vista, cambiaVista} = props;
-  //const [vistaActual, setVistaActual] = useState(1);
+  const { vista, cambiaVista, cambiaTitulo } = props;
 
   const vistaGuardias = () => {
-    //setVistaActual(0);
     {cambiaVista('Guardias')}
-    navigation.navigate('Guardias');
+    {cambiaTitulo('Guardias')}
+    
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Guardias' }],
+    });
   }
 
   const vistaHome = () => {
     //setVistaActual(1);
     {cambiaVista('Home')}
-    navigation.navigate('Home');
+    {cambiaTitulo('Centro Jabalcuz')}
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+
+    //navigation.navigate('Home');
   }
 
   const vistaReservas = () => {
     //setVistaActual(2);
     {cambiaVista('Reservas')}
-    navigation.navigate('Reservas');
+    {cambiaTitulo('Reservas')}
+    
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Reservas' }],
+    });
   }
 
   return (
@@ -67,7 +82,7 @@ export default function AppBarInf(props) {
 
 const styles = StyleSheet.create({
   appBar: {
-    height: '12%',
+    height: '10%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'space-around',
