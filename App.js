@@ -7,17 +7,33 @@ import AppBarSup from './components/nav_bar_superior';
 import Home from './components/home';
 import Guardias from './components/guardias';
 import Reservas from './components/reservas';
+import SettingsScreen from './components/ajustes';
+import LoginScreen from './components/login_components';
 
 export default class App extends Component {
   state = {
     vistaActual: 'Home',
-    vistaAnterior: 'Home'
+    vistaAnterior: 'Home',
+    login: true,
+    titulo: 'Centro Jabalcuz'
   }
-  
+
   cambiaVista = (numVista) => {
     this.setState({
       vistaAnterior: this.state.vistaActual,
       vistaActual: numVista
+    })
+  }
+
+  actualizaLogin = (nuevoValor) => {
+    this.setState({
+      login: nuevoValor
+    })
+  }
+
+  actualizaTitulo = (nuevoTit) => {
+    this.setState({
+      titulo: nuevoTit
     })
   }
 
@@ -26,19 +42,23 @@ export default class App extends Component {
 
     return (
       <View style={styles.container}>
-        <AppBarSup />
         <NavigationContainer>
+          {!this.state.login && <AppBarSup titulo = {this.state.titulo} cambiaTitulo = {this.actualizaTitulo} />}
           <PilaNav.Navigator
             screenOptions={{
               headerShown: false,
               //animation: ((this.state.vistaActual === 'Reservas' && this.state.vistaAnterior === 'Home') ? 'slide_from_left' : 'slide_from_left')
-              animation: 'fade_from_bottom'
+              animation: 'fade_from_bottom',
+              gesturesEnabled: false,
+              unmountOnBlur: true
             }}>
+            <PilaNav.Screen name="Login" component={LoginScreen} initialParams={{ login: this.state.login, actualizaLogin: this.actualizaLogin, cambiaTitulo: this.actualizaTitulo, cambiaVista: this.cambiaVista }}/>
             <PilaNav.Screen name="Home" component={Home}/>
             <PilaNav.Screen name="Guardias" component={Guardias} />
             <PilaNav.Screen name="Reservas" component={Reservas} />
+            <PilaNav.Screen name="Ajustes" component={SettingsScreen} initialParams={{ login: this.state.login, actualizaLogin: this.actualizaLogin }}/>
           </PilaNav.Navigator>
-          <AppBarInf vista = {this.state.vistaActual} cambiaVista = {this.cambiaVista} />
+          {!this.state.login && <AppBarInf vista = {this.state.vistaActual} cambiaVista = {this.cambiaVista} cambiaTitulo = {this.actualizaTitulo} />}
         </NavigationContainer>
       </View>
     );
@@ -49,7 +69,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    //alignItems: 'center',
     justifyContent: 'center',
   },
 });

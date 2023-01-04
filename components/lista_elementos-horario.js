@@ -5,7 +5,7 @@ const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
 const fontScaleElementos = PixelRatio.getPixelSizeForLayoutSize(6.1);
 
 const TextoHoraClase = ({ Materia, Hora, Clase }) => (
-    <View style={styles.card}>
+    <View style={styles.card} key={Clase + Materia + Hora}>
       <Text style={styles.textClase}>{Clase}</Text>
       <Text style={styles.textMat}>{Materia}</Text>
       <Text style={styles.textDer}>{Hora}</Text>
