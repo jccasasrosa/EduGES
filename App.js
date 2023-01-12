@@ -9,6 +9,9 @@ import Guardias from './components/guardias';
 import Reservas from './components/reservas';
 import SettingsScreen from './components/ajustes';
 import LoginScreen from './components/login_components';
+import Notificaciones from './components/notificaciones';
+import Finalizar_dia from './components/finalizar_dia';
+import NotificarAusencia from './components/notificar_ausencia'
 
 export default class App extends Component {
   state = {
@@ -56,6 +59,9 @@ export default class App extends Component {
             <PilaNav.Screen name="Home" component={Home}/>
             <PilaNav.Screen name="Guardias" component={Guardias} />
             <PilaNav.Screen name="Reservas" component={Reservas} />
+            <PilaNav.Screen name="Notificaciones" component={Notificaciones} />
+            <PilaNav.Screen name="Finalizar_dia" component={Finalizar_dia} />
+            <PilaNav.Screen name="NotificarAusencia" component={NotificarAusencia} />
             <PilaNav.Screen name="Ajustes" component={SettingsScreen} initialParams={{ login: this.state.login, actualizaLogin: this.actualizaLogin }}/>
           </PilaNav.Navigator>
           {!this.state.login && <AppBarInf vista = {this.state.vistaActual} cambiaVista = {this.cambiaVista} cambiaTitulo = {this.actualizaTitulo} />}

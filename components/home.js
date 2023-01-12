@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import ListaMateria from './lista_elementos-horario';
+import { useNavigation } from '@react-navigation/native';
 
 const tit_clase = "En el día de hoy";
 const lista_clase = [["Matemáticas", "08:30", "2ºA"],["Naturales", "09:30", "1ºC"],["Lengua", "11:30", "3ºA"],["Matemáticas", "15:30", "3ºB"]];
@@ -9,14 +10,26 @@ const tit_reservas = "Reservas";
 const lista_reservas = [["Proyector", "08:30", ""],["Pista Basket", "10:30", ""],["Raquetas", "12:30", ""],["Aros", "13:30", ""]];
 
 export default function Home() {
+  const navigation = useNavigation();
+
+  const vistaFinalizarDia = () => {
+    navigation.reset({
+        index: 0,
+        routes: [{ name: 'Finalizar_dia' }],
+    });
+
+    console.log(navigation); 
+    navigation.navigate('Finalizar_dia');
+  }
+
   return (
     <ScrollView style={styles.vistaScroll}>
         <View style={styles.container}>
             <ListaMateria lista = {lista_clase} tit = {tit_clase}/>
             <ListaMateria lista = {lista_reservas} tit = {tit_reservas}/>
-            <Pressable style={styles.boton}  onPress={() => {}}>
+            <TouchableOpacity style={styles.boton}  onPress={vistaFinalizarDia}>
                 <Text style={styles.textBoton}>Finalizar día</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     </ScrollView>
   );

@@ -22,17 +22,29 @@ export default function AppBarSup(props) {
     navigation.navigate('Ajustes');
   }
 
+  const vistaNotificaciones = () => {
+    //{cambiaTitulo('Ajustes')}
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Notificaciones' }],
+    });
+
+    console.log(navigation); 
+    navigation.navigate('Notificaciones');
+  }
+
   return (
     <SafeAreaView style={styles.barraNegra}>
       <View style={styles.appBar}>
         <Text style={styles.title}>{titulo}</Text>
         <View style={styles.rightButtons}>
-          <Image style={styles.icon} source={require(imgCampana)} onPress={() => {}} />
+          <TouchableOpacity style={styles.icon} onPress={vistaNotificaciones}>
+            <Image style={styles.icon} source={require(imgCampana)} onPress={() => {}} />
+          </TouchableOpacity>
           <View style={styles.espacio}></View>
           <TouchableOpacity style={styles.icon} onPress={vistaAjustes}>
             <Image style={styles.iconImg} source={require(imgAjustes)} onPress={() => {}} />
-            {/* <Button title="Opción 1" onPress={() => {}} />
-            <Button title="Opción 2" onPress={() => {}} /> */}
           </TouchableOpacity>
         </View>
       </View>

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Pressable, StyleSheet, Text, PixelRatio, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const fontScale = PixelRatio.getPixelSizeForLayoutSize(6.5);
 const fontScaleBotones = PixelRatio.getPixelSizeForLayoutSize(7.0);
 
-const App = () => {
+const Finalizar_dia = () => {
+  const navigation = useNavigation();
   const [button1, setButton1] = useState(false);
   const [button2, setButton2] = useState(false);
   const [button3, setButton3] = useState(false);
@@ -24,6 +26,13 @@ const App = () => {
     setButton4(updatedButton4);
     setAdditionalButton(updatedAdditionalButton);
   };
+
+  const vistaHome = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -65,6 +74,7 @@ const App = () => {
           styles.buttonConfirmarDesactivado,
           additionalButton ? styles.buttonConfirmarActivado : styles.buttonConfirmarDesactivado,
         ]}
+        onPress={vistaHome}
         disabled={!additionalButton}>
         <Text style={[
           styles.confirmarButtonTextDeactivated,
@@ -86,7 +96,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ecf0f1',
     alignItems: 'center',
-    justifyContent: 'center',
+    top: 20,
   },
   buttonConfirmarActivado: {
     top: '4%', 
@@ -123,7 +133,7 @@ const styles = StyleSheet.create({
     top: 15, 
     width: '90%',
     margin: 3, 
-    marginBottom: 20, 
+    marginBottom: 8, 
     paddingTop: 8, 
     paddingBottom: 8, 
     paddingLeft: 8, 
@@ -142,7 +152,7 @@ const styles = StyleSheet.create({
     top: 15, 
     width: '90%',
     margin: 3, 
-    marginBottom: 20, 
+    marginBottom: 8, 
     paddingTop: 8, 
     paddingBottom: 8, 
     paddingLeft: 8, 
@@ -193,4 +203,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export default Finalizar_dia;

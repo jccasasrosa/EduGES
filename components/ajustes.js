@@ -39,7 +39,7 @@ export default function SettingsScreen(props) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <View style={styles.topSide}>
         <View style={styles.topContainer}>
           <Image style={styles.profileImage} source={require('../assets/persona.png')} />
@@ -69,7 +69,7 @@ export default function SettingsScreen(props) {
         </TouchableOpacity>
         <Text style={styles.textVersion}>Versi&oacute;n 0.0.1</Text>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -184,7 +184,6 @@ const styles = StyleSheet.create({
   topSide:{
     alignSelf: 'flex-start',
     width: '100%',
-    paddingBottom: 50,
   },
   bottomSide: {
     alignSelf: 'flex-end',
