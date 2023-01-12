@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, PixelRatio } from 'react-native';
 
 const num = [["Guardia", "Hace 2 min", "1ºB", "Raúl Paredes notifica ausencia"],
 ["Guardia", "hace 23 min", "1ºB", "Sergio Perea notifica ausencia"],
 ["Excursión", "hace 1 hora", "6ºB", "Juan Carlos notifica excursión"],
 ["Tutoria", "hace 1 hora", "4ºA", "Javier notifica a los padres de Pedro"]]
+
+const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
+const fontScaleElementos = PixelRatio.getPixelSizeForLayoutSize(6.1);
+const fontScaleElementosMin = PixelRatio.getPixelSizeForLayoutSize(4.5);
 
 const TextoHoraClase = ({ Materia, Hora, Clase, Motivo }) => (
     <View style={styles.card}>
@@ -21,21 +25,16 @@ const TextoHoraClase = ({ Materia, Hora, Clase, Motivo }) => (
     </View>
   );
 
-export default function ListaMateria() {
+export default function Notificaciones() {
   return ( 
     <View style={styles.view}>
       <Text style={styles.subtitulo}>Horas de Clase</Text>
       <View>
-        <FlatList 
-          style={{
-            flexGrow: 0,
-          }}
-          data = {num}
-          renderItem = {
-            ({item}) => (
-              <TextoHoraClase Materia={item[0]} Hora={item[1]} Clase={item[2]} Motivo={item[3]} />
-            )
-        }/>
+        <View>
+          {num.map((item) => (
+            <TextoHoraClase Materia={item[0]} Hora={item[1]} Clase={item[2]} Motivo={item[3]} />
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -57,8 +56,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     bottom: 15,
-    flexWrap: "wrap",
-    width: '90%',
   },
   textClase: {
     borderRadius: 10,
@@ -69,25 +66,25 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     marginRight: 0,
     backgroundColor: '#f4f4f4',
-    fontSize: 17,
+    fontSize: fontScaleElementos,
     fontWeight: 'bold',
     alignContent: 'center',
   }, 
   textMat: {
     textAlign: 'left',
     color: '#47525E',
-    fontSize: 17,
+    fontSize: fontScaleElementos,
     flex: 1,
   },  
   textDer: {
     textAlign: 'right',
     color: '#47525E',
-    fontSize: 13,
+    fontSize: fontScaleElementosMin,
   }, 
   textMotivo: {
     flex: 1,
     flexDirection: 'row',
-    fontSize: 13,
+    fontSize: fontScaleElementosMin,
     paddingLeft: 10, 
     marginRight: 0,
     width: '100%',
@@ -109,10 +106,13 @@ const styles = StyleSheet.create({
   },
   subtitulo: {
     color: '#47525E',
-    fontSize: 13,
+    fontSize: fontScale,
     paddingLeft: 10, 
+    paddingTop: 10,
   },
   view: {
     backgroundColor: '#f4f4f4',
+    paddingBottom: 20,
+    padding: 8,
   }
 });

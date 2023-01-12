@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
     marginRight: 0,
   }, 
   subtitulo: {
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#ecf0f1',
     color: '#47525E',
     fontSize: fontScale,
     paddingLeft: 10, 
   },
   view: {
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#ecf0f1',
     paddingBottom: 20,
   }
 });
