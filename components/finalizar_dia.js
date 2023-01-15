@@ -1,30 +1,47 @@
 import React, { useState } from 'react';
 import { View, Pressable, StyleSheet, Text, PixelRatio, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
+import 'moment/locale/es';
 
 const fontScale = PixelRatio.getPixelSizeForLayoutSize(6.5);
 const fontScaleBotones = PixelRatio.getPixelSizeForLayoutSize(7.0);
 
+const buttons = [
+  {
+      text: 'Vetanas cerradas',
+      state: false,
+  },
+  {
+      text: 'Persianas bajadas',
+      state: false,
+  },
+  {
+      text: 'Ordenadores apagados',
+      state: false,
+  },
+  {
+      text: 'Luces apagadas',
+      state: false,
+  }
+]
+
 const Finalizar_dia = () => {
   const navigation = useNavigation();
-  const [button1, setButton1] = useState(false);
-  const [button2, setButton2] = useState(false);
-  const [button3, setButton3] = useState(false);
-  const [button4, setButton4] = useState(false);
+  const [activeButtons, setActiveButtons] = useState(buttons);
   const [additionalButton, setAdditionalButton] = useState(false);
 
   const handlePress = (buttonNumber) => {
-    const updatedButton1 = buttonNumber === 1 ? !button1 : button1;
-    const updatedButton2 = buttonNumber === 2 ? !button2 : button2;
-    const updatedButton3 = buttonNumber === 3 ? !button3 : button3;
-    const updatedButton4 = buttonNumber === 4 ? !button4 : button4;
-    const updatedAdditionalButton = updatedButton1 && updatedButton2 && updatedButton3 && updatedButton4;
-
-    setButton1(updatedButton1);
-    setButton2(updatedButton2);
-    setButton3(updatedButton3);
-    setButton4(updatedButton4);
-    setAdditionalButton(updatedAdditionalButton);
+    let aux = [...activeButtons];
+    aux[buttonNumber].state = !aux[buttonNumber].state;
+    setActiveButtons(aux);
+    
+    setAdditionalButton(true);
+    aux.map((item, index) => {
+      if(item.state === false){
+        setAdditionalButton(false);
+      }
+    });
   };
 
   const vistaHome = () => {
@@ -32,43 +49,26 @@ const Finalizar_dia = () => {
       index: 0,
       routes: [{ name: 'Home' }],
     });
+
+    let aux = [...activeButtons];
+    aux.map((item, index) => {
+      item.state = false;
+    });
+    setActiveButtons(aux);
   }
 
   return (
     <View style={styles.container}>
-    <Text style={styles.textFecha}>31 oct. 2022 - 1ºA </Text>
-      <Pressable
-        onPress={() => handlePress(1)}
-        style={[
-          styles.button,
-          button1 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>Ventanas cerradas</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => handlePress(2)}
-        style={[
-          styles.button,
-          button2 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>Persianas bajadas</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => handlePress(3)}
-        style={[
-          styles.button,
-          button3 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>Ordenadores apagados</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => handlePress(4)}
-        style={[
-          styles.button,
-          button4 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>Luces apagadas</Text>
-      </Pressable>
+    <Text style={styles.textFecha}>{moment(new Date()).format('DD MMM YYYY')} - 1ºA </Text>
+      {buttons.map((item, index) => (
+        <Pressable
+            onPress={() => handlePress(index)}
+            style={[
+              activeButtons[index].state ? styles.activatedButton : styles.deactivatedButton,
+            ]}>
+            <Text style={styles.buttonText}>{item.text}</Text>
+        </Pressable>
+      ))}
       <TouchableOpacity
         style={[
           styles.buttonConfirmarDesactivado,
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     borderColor: '#2abbf5',
     borderRadius: 10,
     padding: 5,
+    marginTop: 10,
     backgroundColor: 'white',
     alignSelf: 'center',
   },
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#A0A1A2',
     padding: 5,
+    marginTop: 10,
     backgroundColor: '#A0A1A2',
     alignSelf: 'center',
   },
