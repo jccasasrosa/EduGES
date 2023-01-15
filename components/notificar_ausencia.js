@@ -1,33 +1,54 @@
 import React, { useState } from 'react';
-import { View, Button, Pressable, StyleSheet, Text, PixelRatio, TouchableOpacity } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { View, Pressable, StyleSheet, Text, PixelRatio, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Fechas from './carruselFecha';
 
-const fontScale = PixelRatio.getPixelSizeForLayoutSize(6.5);
-const fontScaleBotones = PixelRatio.getPixelSizeForLayoutSize(7.0);
+const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
+const fontScaleBotones = PixelRatio.getPixelSizeForLayoutSize(6.1);
+
+const buttons = [
+  {
+      text: '09:00 - 10:00',
+      state: false,
+  },
+  {
+      text: '10:00 - 11:00',
+      state: false,
+  },
+  {
+      text: '11:00 - 12:00',
+      state: false,
+  },
+  {
+      text: '12:00 - 13:00',
+      state: false,
+  },
+  {
+      text: '13:00 - 14:00',
+      state: false,
+  },
+  {
+      text: '14:00 - 15:00',
+      state: false,
+  }
+]
 
 const NotificarAusencia = () => {
   const navigation = useNavigation();
-  const [button1, setButton1] = useState(false);
-  const [button2, setButton2] = useState(false);
-  const [button3, setButton3] = useState(false);
-  const [button4, setButton4] = useState(false);
+  const [activeButtons, setActiveButtons] = useState(buttons);
   const [additionalButton, setAdditionalButton] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
 
   const handlePress = (buttonNumber) => {
-    const updatedButton1 = buttonNumber === 1 ? !button1 : button1;
-    const updatedButton2 = buttonNumber === 2 ? !button2 : button2;
-    const updatedButton3 = buttonNumber === 3 ? !button3 : button3;
-    const updatedButton4 = buttonNumber === 4 ? !button4 : button4;
-    const updatedAdditionalButton = updatedButton1 || updatedButton2 || updatedButton3 || updatedButton4;
-
-    setButton1(updatedButton1);
-    setButton2(updatedButton2);
-    setButton3(updatedButton3);
-    setButton4(updatedButton4);
-    setAdditionalButton(updatedAdditionalButton);
+    let aux = [...activeButtons];
+    aux[buttonNumber].state = !aux[buttonNumber].state;
+    setActiveButtons(aux);
+    
+    setAdditionalButton(false);
+    aux.map((item, index) => {
+      if(item.state === true){
+        setAdditionalButton(true);
+      }
+    });
   };
 
   const vistaGuardias = () => {
@@ -35,79 +56,58 @@ const NotificarAusencia = () => {
       index: 0,
       routes: [{ name: 'Guardias' }],
     });
+
+    let aux = [...activeButtons];
+    aux.map((item, index) => {
+      item.state = false;
+    });
+    setActiveButtons(aux);
   }
 
   return (
-    <View style={styles.container}>
-    <Text style={styles.textAusencia}>Indicar ausencia</Text>
-      <View style={styles.dateContainer}>
-      <Button 
-          title={selectedDate.toLocaleDateString()}
-          onPress={() => setIsDatePickerVisible(true)}
-        />
-        <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            date={selectedDate}
-            onConfirm={(date) => {
-              setSelectedDate(date);
-              setIsDatePickerVisible(false);
-            }}
-            onCancel={() => setIsDatePickerVisible(false)}
-            minimumDate={new Date()}
-          />
-        </View>
-      <Pressable
-        onPress={() => handlePress(1)}
-        style={[
-          button1 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>09:00 - 10:00</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => handlePress(2)}
-        style={[
-          button2 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>10:00 - 11:00</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => handlePress(3)}
-        style={[
-          button3 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>11:00 - 12:00</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => handlePress(4)}
-        style={[
-          button4 ? styles.activatedButton : styles.deactivatedButton,
-        ]}>
-        <Text style={styles.buttonText}>12:00 - 13:00</Text>
-      </Pressable>
-      <TouchableOpacity
-        style={[
-          styles.buttonConfirmarDesactivado,
-          additionalButton ? styles.buttonConfirmarActivado : styles.buttonConfirmarDesactivado,
-        ]}
-        onPress={vistaGuardias}
-        disabled={!additionalButton}>
-        <Text style={[
-          styles.confirmarButtonTextDeactivated,
-          additionalButton ? styles.confirmarButtonTextActivated : styles.confirmarButtonTextDeactivated,
-        ]}
-        disabled={!additionalButton}>Confirmar</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView style={styles.containerScroll}>
+      <View style={styles.container}>
+        <Text style={styles.textAusencia}>Indicar ausencia</Text>
+        <Fechas/>
+        {buttons.map((item, index) => (
+            <Pressable
+                key={index}
+                onPress={() => handlePress(index)}
+                style={[
+                  activeButtons[index].state ? styles.activatedButton : styles.deactivatedButton,
+                ]}>
+                <Text style={styles.buttonText}>{item.text}</Text>
+            </Pressable>
+        ))}
+        <TouchableOpacity
+          style={[
+            styles.buttonConfirmarDesactivado,
+            additionalButton ? styles.buttonConfirmarActivado : styles.buttonConfirmarDesactivado,
+          ]}
+          onPress={vistaGuardias}
+          disabled={!additionalButton}>
+          <Text style={[
+            styles.confirmarButtonTextDeactivated,
+            additionalButton ? styles.confirmarButtonTextActivated : styles.confirmarButtonTextDeactivated,
+          ]}
+          disabled={!additionalButton}>Confirmar</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-   container: {
+  container: {
     flex: 1,
+    paddingTop: 20,
+    //paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
-    alignItems: 'center',
-    top: 20,
+    padding: 8,
+  },
+  containerScroll: {
+    flex: 1,
+    width: '100%',
   },
   buttonConfirmarActivado: {
     top: '4%', 
@@ -116,8 +116,10 @@ const styles = StyleSheet.create({
     borderColor: '#2abbf5',
     borderRadius: 10,
     padding: 5,
+    marginTop: 10,
     backgroundColor: 'white',
     alignSelf: 'center',
+    marginBottom: 140,
   },
   buttonConfirmarDesactivado: {
     top: '4%', 
@@ -126,8 +128,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#A0A1A2',
     padding: 5,
+    marginTop: 10,
     backgroundColor: '#A0A1A2',
     alignSelf: 'center',
+    marginBottom: 140,
   },
   activatedButton: {
     alignSelf: 'center',
@@ -172,8 +176,8 @@ const styles = StyleSheet.create({
     fontSize: fontScale,
     color: 'black',
     padding: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingTop: 12,
+    paddingBottom: 12,
   },
   confirmarButtonTextDeactivated: {
     alignSelf: 'center',
