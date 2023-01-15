@@ -5,7 +5,7 @@ const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
 const fontScaleElementos = PixelRatio.getPixelSizeForLayoutSize(6.1);
 
 const TextoHoraClase = ({ Materia, Hora, Clase }) => (
-    <View style={styles.card} key={Clase + Materia + Hora}>
+    <View style={styles.card}>
       <Text style={styles.textClase}>{Clase}</Text>
       <Text style={styles.textMat}>{Materia}</Text>
       <Text style={styles.textDer}>{Hora}</Text>
@@ -18,8 +18,10 @@ export default function ListaMateria({ lista, tit }) {
       <Text style={styles.subtitulo}>{tit}</Text>
       <View>
         <View>
-          {lista.map((item) => (
-            <TextoHoraClase Materia={item[0]} Hora={item[1]} Clase={item[2]} />
+          {lista.map((item, index) => (
+            <View key={index}>
+              <TextoHoraClase Materia={item[0]} Hora={item[1]} Clase={item[2]} />
+            </View>
           ))}
         </View>
       </View>
