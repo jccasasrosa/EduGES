@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const imgNavIzq = '../assets/eye.png';
 const imgNavCentro= '../assets/home.png';
-const imgNavDer = '../assets/class.png';
+const imgNavDer = '../assets/reserve.png';
   
 export default function AppBarInf(props) {
   const navigation = useNavigation();
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   icon: {
-    height: '77%',
+    height: '79%',
     resizeMode: 'contain',
     aspectRatio: 1,
   },

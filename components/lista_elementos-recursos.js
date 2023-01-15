@@ -1,24 +1,60 @@
-import {Image, View, Text, StyleSheet, PixelRatio } from 'react-native';
+import {Image, View, Text, StyleSheet, PixelRatio, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
 const fontScaleElementos = PixelRatio.getPixelSizeForLayoutSize(6.1);
 
-const TextoRecursosInstalaciones = ({ Elemento, RutaImagen }) => (
-    <View style={styles.card} key={Elemento + RutaImagen}>
-      <Text style={styles.fondoImagen}></Text>
-      <Image style={styles.element_image} source={{uri: RutaImagen}} />
-      <Text style={styles.textMat}>{Elemento}</Text>
-    </View>
-  );
+export default function ListaElementos({ lista, tit, setEliminaReserva }) {
+  const navigation = useNavigation();
 
-export default function ListaElementos({ lista, tit }) {
+  const muestraModalDestructor = (boton, ele) => {
+    Alert.alert(
+      'Atención',
+      '¿Seguro que quiere cancelar la reserva?',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Cancela'),
+        },
+        {
+          text: 'Confirmar',
+          onPress: () => uncancell(boton, ele),
+          style: 'destructive',
+        },
+      ]
+    );
+  };
+
+  const uncancell = (boton, ele) => {
+    {setEliminaReserva(boton + "," + ele)}
+  };
+  
+  const vistaItem = (buttons, ele) => {
+    if(typeof buttons === 'undefined' || !Array.isArray(buttons) || buttons.length === 0){
+      muestraModalDestructor(buttons, ele);
+    }else{
+      navigation.navigate('ItemReservas', { buttons });
+    }
+  }
+  
+  const TextoRecursosInstalaciones = ({ Elemento, RutaImagen, bot }) => (
+    <TouchableOpacity
+      onPress={() => vistaItem(bot, Elemento)}>
+      <View style={styles.card} key={Elemento + RutaImagen}>
+        <Image style={styles.element_image} source={RutaImagen} />
+        <Text style={styles.textMat}>{Elemento}</Text>
+        {typeof bot === 'string' && <Text style={styles.textHora}>{bot.substring(0,5)}</Text>}
+      </View>
+    </TouchableOpacity>
+  )
+
   return ( 
     <View style={styles.view}>
       <Text style={styles.subtitulo}>{tit}</Text>
       <View>
         <View>
-          {lista.map((item) => (
-            <TextoRecursosInstalaciones key={item[0] + item[1]} Elemento={item[0]} RutaImagen={item[1]}/>
+          {lista.map((item, index) => (
+            <TextoRecursosInstalaciones key={index} Elemento={item[0]} RutaImagen={item[1]} bot={item[2]}/>
           ))}
         </View>
       </View>
@@ -43,14 +79,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     bottom: 15,
   },
-  fondoImagen: {
-    borderRadius: 10,
-    borderWidth: 1,
-    backgroundColor: '#f4f4f4',
-    fontSize: fontScaleElementos,
-    alignContent: 'center',
-    minWidth: 40,
-  }, 
   textMat: {
     textAlign: 'left',
     color: '#47525E',
@@ -64,6 +92,16 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     flex:1
   },
+  textHora: {
+    textAlign: 'right',
+    color: '#47525E',
+    fontSize: fontScaleElementos,
+    paddingTop: 12, 
+    paddingBottom: 12, 
+    paddingLeft: 10, 
+    paddingRight: 10,
+    marginRight: 0,
+  },
   subtitulo: {
     backgroundColor: '#ecf0f1',
     color: '#47525E',
@@ -75,10 +113,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   element_image: {
-    position: 'absolute',
-    left: 10,
-    top: 10,
-    width: 35,
-    height: 35
+    borderRadius: 10,
+    borderWidth: 1,
+    position: 'relative',
+    width: '13%',
+    height: '100%',
+    resizeMode: 'contain',
+    backgroundColor: '#f4f4f4',
+    aspectRatio: 1,
+    alignSelf: 'center',
   }
 });

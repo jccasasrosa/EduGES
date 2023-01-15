@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity, PixelRatio, ScrollView, Alert } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, PixelRatio, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);

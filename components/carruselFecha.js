@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button } from 'react-native';
+import { View, TouchableOpacity, Text, PixelRatio, NativeModules, Platform  } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { StyleSheet, Appearance } from 'react-native';
+import moment from 'moment';
+import 'moment/locale/es';
+
+const fontScale = PixelRatio.getPixelSizeForLayoutSize(10.5);
+
+const deviceLanguage =
+      Platform.OS === 'ios'
+        ? NativeModules.SettingsManager.settings.AppleLocale ||
+          NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
+        : NativeModules.I18nManager.localeIdentifier;
 
 const Fechas = () => {
   // Establece la fecha seleccionada inicialmente en la fecha actual
@@ -27,10 +37,12 @@ const Fechas = () => {
       {/* Contenedor para mostrar la fecha seleccionada y el botón */}
       <View style={styles.dateContainer}>
         {/* Botón para mostrar el modal con el Date Picker */}
-        <Button 
+        <TouchableOpacity 
           title={selectedDate.toLocaleDateString()}
           onPress={() => setIsDatePickerVisible(true)}
-        />
+        >
+          <Text style={styles.dateText}>{moment(selectedDate).format('DD MMM YYYY')}</Text>
+        </TouchableOpacity>
       </View>
       {/* Modal con el Date Picker */}
       <DateTimePickerModal
@@ -38,6 +50,7 @@ const Fechas = () => {
         isVisible={isDatePickerVisible}
         mode="date"
         date={selectedDate}
+        locale={deviceLanguage}
         onConfirm={(date) => {
           setSelectedDate(date);
           setIsDatePickerVisible(false);
@@ -61,6 +74,8 @@ const styles = StyleSheet.create({
     },
     dateText: {
         color: '#000',
+        fontSize: fontScale,
+        marginTop: 20,
     },
 });
 

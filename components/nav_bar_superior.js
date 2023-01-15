@@ -77,14 +77,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '40%',
-
   },
   rightButtons: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
   icon: {
-    width: '20%',
+    width: '18.5%',
     height: '100%',
     resizeMode: 'contain',
     aspectRatio: 1,
@@ -96,6 +95,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   espacio: {
-    width: '7%',
+    width: '9%',
   }
 });
