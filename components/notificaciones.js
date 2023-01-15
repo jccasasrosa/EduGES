@@ -31,8 +31,8 @@ export default function Notificaciones() {
       <Text style={styles.subtitulo}>Horas de Clase</Text>
       <View>
         <View>
-          {num.map((item) => (
-            <TextoHoraClase Materia={item[0]} Hora={item[1]} Clase={item[2]} Motivo={item[3]} />
+          {num.map((item, index) => (
+            <TextoHoraClase key={index} Materia={item[0]} Hora={item[1]} Clase={item[2]} Motivo={item[3]} />
           ))}
         </View>
       </View>
