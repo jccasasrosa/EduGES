@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import ListaMateria from './lista_elementos-horario';
 import ListaReservas from './lista_elementos-recursos';
 import { useNavigation } from '@react-navigation/native';
@@ -55,12 +55,11 @@ export default function Home(props) {
     }, [eliminaReserva]);
 
   const vistaFinalizarDia = () => {
-    navigation.reset({
-        index: 0,
-        routes: [{ name: 'Finalizar_dia' }],
-    });
-
     navigation.navigate('Finalizar_dia');
+  }
+
+  const vistaHorario = () => {
+    navigation.navigate('Horario');
   }
 
   lista_recursos.map((item) => {
@@ -100,6 +99,11 @@ export default function Home(props) {
   return (
     <ScrollView style={styles.vistaScroll}>
         <View style={styles.container}>
+            <TouchableOpacity style={styles.calendar} onPress={vistaHorario}>
+            <Image style={styles.icon}
+                source={require('../assets/calendar.png')}
+            />
+            </TouchableOpacity>
             <ListaMateria lista = {lista_clase} tit = {tit_clase}/>
             <ListaReservas lista = {lista_reservas} tit = {tit_reservas} setEliminaReserva = {setEliminaReserva}/>
             <TouchableOpacity style={styles.boton}  onPress={vistaFinalizarDia}>
@@ -134,6 +138,19 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 20,
+    },
+    icon: {
+        height: '79%',
+        resizeMode: 'contain',
+        aspectRatio: 1,
+    },
+    calendar: {
+        position: 'absolute',
+        paddingTop: 5,
+        height: '6%',
+        justifyContent: 'center',
+        left: '88%',
+        zIndex: 1,
     },
     vistaScroll: {
         flex: 1,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, PixelRatio } from 'react-native';
+import Fecha from './carruselFecha'
 
 const fontScale = PixelRatio.getPixelSizeForLayoutSize(5.5);
 const fontScaleElementos = PixelRatio.getPixelSizeForLayoutSize(6.1);
@@ -16,6 +17,8 @@ export default function ListaMateria({ lista, tit }) {
   return ( 
     <View style={styles.view}>
       <Text style={styles.subtitulo}>{tit}</Text>
+      {tit === "Horario" && <Fecha/>}
+      {tit === "Horario" && <Text style={styles.espacio}/>}
       <View>
         <View>
           {lista.map((item, index) => (
@@ -91,5 +94,8 @@ const styles = StyleSheet.create({
   view: {
     backgroundColor: '#ecf0f1',
     paddingBottom: 20,
+  },
+  espacio: {
+    paddingBottom: 5,
   }
 });

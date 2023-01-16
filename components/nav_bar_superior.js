@@ -76,11 +76,13 @@ const styles = StyleSheet.create({
     color: '#47525E',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    width: '40%',
+    width: '70%',
+    left: '8%',
   },
   rightButtons: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    right: '8%',
   },
   icon: {
     width: '18.5%',
