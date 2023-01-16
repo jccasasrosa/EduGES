@@ -38,7 +38,7 @@ export default function ItemReserva(props) {
       const muestraModalNormal = (boton) => {
         Alert.alert(
           'Atención',
-          '¿Seguro que quiere cancelar la reserva?',
+          '¿Seguro que quiere realizar la reserva?',
           [
             {
               text: 'Cancelar',
