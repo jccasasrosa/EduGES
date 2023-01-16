@@ -9,20 +9,20 @@ const fontScaleBotones = PixelRatio.getPixelSizeForLayoutSize(7.0);
 
 const buttons = [
   {
-      text: 'Vetanas cerradas',
-      state: false,
+    text: 'Vetanas cerradas',
+    state: false,
   },
   {
-      text: 'Persianas bajadas',
-      state: false,
+    text: 'Persianas bajadas',
+    state: false,
   },
   {
-      text: 'Ordenadores apagados',
-      state: false,
+    text: 'Ordenadores apagados',
+    state: false,
   },
   {
-      text: 'Luces apagadas',
-      state: false,
+    text: 'Luces apagadas',
+    state: false,
   }
 ]
 
@@ -35,10 +35,10 @@ const Finalizar_dia = () => {
     let aux = [...activeButtons];
     aux[buttonNumber].state = !aux[buttonNumber].state;
     setActiveButtons(aux);
-    
+
     setAdditionalButton(true);
     aux.map((item, index) => {
-      if(item.state === false){
+      if (item.state === false) {
         setAdditionalButton(false);
       }
     });
@@ -59,14 +59,15 @@ const Finalizar_dia = () => {
 
   return (
     <View style={styles.container}>
-    <Text style={styles.textFecha}>{moment(new Date()).format('DD MMM YYYY')} - 1ºA </Text>
+      <Text style={styles.textFecha}>{moment(new Date()).format('DD MMM YYYY')} - 1ºA </Text>
       {buttons.map((item, index) => (
         <Pressable
-            onPress={() => handlePress(index)}
-            style={[
-              activeButtons[index].state ? styles.activatedButton : styles.deactivatedButton,
-            ]}>
-            <Text style={styles.buttonText}>{item.text}</Text>
+          key={index}
+          onPress={() => handlePress(index)}
+          style={[
+            activeButtons[index].state ? styles.activatedButton : styles.deactivatedButton,
+          ]}>
+          <Text style={styles.buttonText}>{item.text}</Text>
         </Pressable>
       ))}
       <TouchableOpacity
@@ -80,26 +81,26 @@ const Finalizar_dia = () => {
           styles.confirmarButtonTextDeactivated,
           additionalButton ? styles.confirmarButtonTextActivated : styles.confirmarButtonTextDeactivated,
         ]}
-        disabled={!additionalButton}>Confirmar</Text>
+          disabled={!additionalButton}>Confirmar</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.buttonObservaciones}>
         <Text style={styles.observacionesButtonText}>Observaciones</Text>
       </TouchableOpacity>
-      
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-   container: {
+  container: {
     flex: 1,
     backgroundColor: '#ecf0f1',
     alignItems: 'center',
     top: 20,
   },
   buttonConfirmarActivado: {
-    top: '4%', 
+    top: '4%',
     width: '80%',
     borderWidth: 2,
     borderColor: '#2abbf5',
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonConfirmarDesactivado: {
-    top: '4%', 
+    top: '4%',
     width: '80%',
     borderRadius: 10,
     borderWidth: 2,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonObservaciones: {
-    top: '6%', 
+    top: '6%',
     width: '80%',
     borderRadius: 10,
     borderWidth: 2,
@@ -132,17 +133,17 @@ const styles = StyleSheet.create({
   },
   activatedButton: {
     alignSelf: 'center',
-    top: 15, 
+    top: 15,
     width: '90%',
-    margin: 3, 
-    marginBottom: 8, 
-    paddingTop: 8, 
-    paddingBottom: 8, 
-    paddingLeft: 8, 
-    paddingRight: 8, 
-    fontSize: fontScale, 
-    borderWidth: 2, 
-    borderRadius: 15, 
+    margin: 3,
+    marginBottom: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    fontSize: fontScale,
+    borderWidth: 2,
+    borderRadius: 15,
     backgroundColor: '#9bf765',
     flexDirection: 'row',
     bottom: 15,
@@ -151,17 +152,17 @@ const styles = StyleSheet.create({
   },
   deactivatedButton: {
     alignSelf: 'center',
-    top: 15, 
+    top: 15,
     width: '90%',
-    margin: 3, 
-    marginBottom: 8, 
-    paddingTop: 8, 
-    paddingBottom: 8, 
-    paddingLeft: 8, 
-    paddingRight: 8, 
-    fontSize: fontScale, 
-    borderWidth: 2, 
-    borderRadius: 15, 
+    margin: 3,
+    marginBottom: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    fontSize: fontScale,
+    borderWidth: 2,
+    borderRadius: 15,
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     bottom: 15,

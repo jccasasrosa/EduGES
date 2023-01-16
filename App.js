@@ -13,6 +13,7 @@ import Notificaciones from './components/notificaciones';
 import Finalizar_dia from './components/finalizar_dia';
 import NotificarAusencia from './components/notificar_ausencia'
 import ItemReserva from './components/item_reserva';
+import Horario from './components/horario';
 
 export default function App() {
 
@@ -70,6 +71,7 @@ export default function App() {
             <PilaNav.Screen name="Notificaciones" component={Notificaciones} />
             <PilaNav.Screen name="Finalizar_dia" component={Finalizar_dia} />
             <PilaNav.Screen name="NotificarAusencia" component={NotificarAusencia} />
+            <PilaNav.Screen name="Horario" component={Horario} />
             <PilaNav.Screen name="ItemReservas" component={ItemReserva} initialParams={{ lista_instalaciones: lista_instalacion_state,  lista_recursos: lista_recurso_state, set_lista_recursos: set_lista_recurso_state, set_lista_instalaciones: set_lista_instalacion_state }} />
             <PilaNav.Screen name="Ajustes" component={SettingsScreen} initialParams={{ login: login, actualizaLogin: setLogin }}/>
           </PilaNav.Navigator>
