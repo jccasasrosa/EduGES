@@ -8,5 +8,10 @@ EduGES es la aplicación que hemos desarrollado para el proyecto final de esta a
 - Implementación de persistencia de datos
 - Fácil integración con servidor al que se conectaría este front-end
 
+Para arrancar el proyecto, se debe escribir la siguiente línea de código en el repositorio base del proyecto:
+
+```
+$ npm start
+```
 
 ##### _Juan Carlos Casas Rosa_, _Javier Auñón del Barco_, _Raúl Paredes Molina_, _Sergio Perea de la Casa_
