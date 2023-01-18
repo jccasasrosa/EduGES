@@ -14,4 +14,4 @@ Para arrancar el proyecto, se debe escribir la siguiente línea de código en el
 $ npm start
 ```
 
-##### _Juan Carlos Casas Rosa_, _Javier Auñón del Barco_, _Raúl Paredes Molina_, _Sergio Perea de la Casa_
+##### _Javier Auñón del Barco_, _Juan Carlos Casas Rosa_, _Raúl Paredes Molina_, _Sergio Perea de la Casa_
